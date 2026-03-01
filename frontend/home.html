@@ -1,0 +1,194 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multi Tracker | Home</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body id="home-dashboard">
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo-mark">MT</span>
+      <div>
+        <strong>Multi Tracker</strong>
+        <small>Track everything in one place</small>
+      </div>
+    </div>
+    <nav class="site-nav">
+      <a href="index.html">Landing</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#tracker">Trackers</a>
+      <a href="admin.html">Admin</a>
+      <a href="#blog">Blog</a>
+      <a href="#contact">Contact</a>
+      <a href="#" id="logout-link">Logout</a>
+      <div class="nav-dropdown">
+        <a href="#contact" class="dropdown-trigger">Info</a>
+        <div class="dropdown-menu">
+          <p><strong>Quick Tip:</strong> Press Ctrl/Cmd + K to quick add.</p>
+          <p class="contact-item"><strong>Support Email:</strong> <a class="contact-link contact-email" href="mailto:johnbett414@gmail.com">johnbett414@gmail.com</a></p>
+          <p class="contact-item"><strong>Phone:</strong> <a class="contact-link contact-phone" href="tel:+254111487078">0111487078</a></p>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <section class="banner">
+    <img src="images/tracker-hero.svg" alt="Tracker dashboard preview with expenses, habits, tasks, and inventory cards" class="tracker-hero" />
+    <h2>Your all-in-one personal and business tracker</h2>
+    <p>Manage expenses, habits, tasks, and inventory from one clean dashboard.</p>
+    <div class="banner-actions">
+      <a class="cta" href="#tracker">Start Tracking</a>
+      <button class="btn-muted" id="quick-add-open" type="button">Quick Add (Ctrl/Cmd + K)</button>
+      <button class="btn-muted" id="enable-reminders" type="button">Enable Reminders</button>
+    </div>
+  </section>
+
+  <section id="dashboard" class="info-section">
+    <h2>Dashboard</h2>
+    <div class="dashboard-cards">
+      <article class="stat"><span>This Month Expenses</span><strong id="sum-expenses">$0.00</strong></article>
+      <article class="stat"><span>Pending Tasks</span><strong id="pending-tasks">0</strong></article>
+      <article class="stat"><span>Habits Done Today</span><strong id="habits-today">0</strong></article>
+      <article class="stat"><span>Low Stock Alerts</span><strong id="low-stock">0</strong></article>
+    </div>
+    <div class="dashboard-grid">
+      <article class="dashboard-panel">
+        <h3>Expense Timeline (7 days)</h3>
+        <canvas id="expense-chart" width="700" height="220"></canvas>
+      </article>
+      <article class="dashboard-panel">
+        <h3>Monthly Calendar</h3>
+        <div id="calendar-grid" class="calendar-grid"></div>
+      </article>
+    </div>
+    <div class="reminder-grid" aria-live="polite">
+      <article class="dashboard-panel reminder-panel">
+        <h3>Due Today <span id="due-today-count" class="badge-count">0</span></h3>
+        <div id="due-today-list" class="reminder-list"></div>
+      </article>
+      <article class="dashboard-panel reminder-panel">
+        <h3>Overdue <span id="overdue-count" class="badge-count">0</span></h3>
+        <div id="overdue-list" class="reminder-list"></div>
+      </article>
+    </div>
+    <div class="dashboard-tools">
+      <button type="button" class="btn-muted" id="export-json">Export JSON</button>
+      <button type="button" class="btn-muted" id="export-csv">Export CSV</button>
+      <label class="btn-muted file-btn">
+        Import JSON
+        <input id="import-json" type="file" accept="application/json" hidden />
+      </label>
+    </div>
+  </section>
+
+  <section id="tracker" class="tracker-wrap">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <h1>Multi Tracker</h1>
+        <p>Choose what to track.</p>
+        <nav id="tracker-nav" class="tracker-nav"></nav>
+      </aside>
+
+      <main class="content">
+        <section id="panel-expenses" class="panel"></section>
+        <section id="panel-habits" class="panel"></section>
+        <section id="panel-tasks" class="panel"></section>
+        <section id="panel-inventory" class="panel"></section>
+      </main>
+    </div>
+  </section>
+
+  <section id="blog" class="info-section">
+    <h2>Blog Post</h2>
+    <article class="blog-card">
+      <h3>5 Practical Ways to Stay Consistent With Tracking</h3>
+      <p>Start small, track daily, review weekly, automate reminders, and focus on trends instead of perfection. Consistency builds useful data over time.</p>
+    </article>
+  </section>
+
+  <section id="contact" class="info-section">
+    <h2>Contact</h2>
+    <p class="contact-item"><strong>Email:</strong> <a class="contact-link contact-email" href="mailto:johnbett414@gmail.com">johnbett414@gmail.com</a></p>
+    <p class="contact-item"><strong>Contact Number:</strong> <a class="contact-link contact-phone" href="tel:+254111487078">0111487078</a></p>
+  </section>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Multi Tracker. All rights reserved. Created by johnbett.</p>
+  </footer>
+
+  <template id="card-template">
+    <article class="card">
+      <h3></h3>
+      <div class="meta"></div>
+      <p></p>
+      <div class="actions"></div>
+    </article>
+  </template>
+
+  <div id="quick-add-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Quick Add">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>Quick Add</h3>
+        <button type="button" class="btn-danger" id="quick-add-close">Close</button>
+      </div>
+      <form id="quick-add-form" class="modal-form"></form>
+    </div>
+  </div>
+
+  <div id="onboarding-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Onboarding">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>Welcome to Multi Tracker</h3>
+      </div>
+      <p>Choose a starter template to set up your first records quickly.</p>
+      <div class="onboard-grid">
+        <button type="button" class="btn-muted" data-template="personal">Personal Starter</button>
+        <button type="button" class="btn-muted" data-template="business">Business Starter</button>
+        <button type="button" class="btn-muted" data-template="blank">Start Blank</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="dictionaries.js"></script>
+  <script src="app.js"></script>
+  <script>
+    async function ensureSession() {
+      try {
+        const response = await fetch("/api/session");
+        const data = await response.json();
+        if (!data.authenticated) {
+          window.location.href = "login.html";
+        }
+      } catch (_) {
+        window.location.href = "login.html";
+      }
+    }
+
+    async function logoutAll() {
+      try {
+        await fetch("/api/logout-all", { method: "POST" });
+      } catch (_) {}
+      window.location.href = "login.html";
+    }
+
+    document.getElementById("logout-link").addEventListener("click", (event) => {
+      event.preventDefault();
+      logoutAll();
+    });
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js").catch(() => {});
+      });
+    }
+
+    ensureSession();
+  </script>
+</body>
+</html>

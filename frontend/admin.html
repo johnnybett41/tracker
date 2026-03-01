@@ -1,0 +1,47 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multi Tracker | Dictionary Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo-mark">MT</span>
+      <div>
+        <strong>Dictionary Manager</strong>
+        <small>Manage all tracker dropdown options</small>
+      </div>
+    </div>
+    <nav class="site-nav">
+      <a href="home.html">Home</a>
+      <a href="index.html">Landing</a>
+      <a href="#" id="logout-link">Logout</a>
+    </nav>
+  </header>
+
+  <section class="info-section">
+    <h2>Admin Dictionary Manager</h2>
+    <p>Edit keys and labels for all trackers. Save changes, then refresh Home to see updated dropdowns.</p>
+    <div class="admin-actions">
+      <button type="button" class="primary" id="save-dictionaries">Save All Dictionaries</button>
+      <button type="button" class="btn-muted" id="reset-dictionaries">Reset Defaults</button>
+    </div>
+    <p id="admin-status" class="admin-status" aria-live="polite"></p>
+  </section>
+
+  <section class="info-section" id="dictionary-sections"></section>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Multi Tracker. All rights reserved. Created by johnbett.</p>
+  </footer>
+
+  <script src="dictionaries.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

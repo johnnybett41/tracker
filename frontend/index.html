@@ -1,0 +1,138 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multi Tracker | Landing</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="landing-page" id="home">
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo-mark">MT</span>
+      <div>
+        <strong>Multi Tracker</strong>
+        <small>Track everything in one place</small>
+      </div>
+    </div>
+    <nav class="site-nav">
+      <a href="#home">Home</a>
+      <a href="#highlights">Highlights</a>
+      <a href="#services">Services</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#blog-posts">Blog Posts</a>
+      <a href="#about">About Us</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <section class="banner">
+    <img src="images/tracker-hero.svg" alt="Tracker dashboard preview with expenses, habits, tasks, and inventory cards" class="tracker-hero" />
+    <h2>Track your life and business from one dashboard</h2>
+    <p>Expenses, habits, tasks, and inventory all in one workflow that is simple and fast.</p>
+    <a class="cta" href="login.html">Get Started</a>
+  </section>
+
+  <section id="highlights" class="info-section">
+    <h2>Highlights</h2>
+    <div class="highlights-grid">
+      <article class="highlight-card">
+        <h3>Expense Visibility</h3>
+        <p>Capture spending with categories and totals so you know where your money goes.</p>
+      </article>
+      <article class="highlight-card">
+        <h3>Habit Consistency</h3>
+        <p>Track daily and weekly habits with streak monitoring to stay disciplined.</p>
+      </article>
+      <article class="highlight-card">
+        <h3>Task Progress</h3>
+        <p>Organize priorities, due dates, and completion status in one place.</p>
+      </article>
+      <article class="highlight-card">
+        <h3>Inventory Control</h3>
+        <p>Manage stock quantities by location and identify low-stock items quickly.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="mini-banner">
+    <p>Built for speed, clarity, and consistent tracking across all your workflows.</p>
+  </section>
+
+  <section id="services" class="info-section">
+    <h2>Services</h2>
+    <div class="feature-grid">
+      <article class="feature-card">
+        <h3>Personal Setup</h3>
+        <p>Configure habits, tasks, and expenses to match your daily routine.</p>
+      </article>
+      <article class="feature-card">
+        <h3>Business Inventory Setup</h3>
+        <p>Create stock categories and location mapping for operational control.</p>
+      </article>
+      <article class="feature-card">
+        <h3>Reporting Guidance</h3>
+        <p>Use weekly review methods to get useful decisions from your data.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="testimonials" class="info-section">
+    <h2>Testimonials</h2>
+    <div class="feature-grid">
+      <article class="feature-card quote-card">
+        <p>"I finally track spending and tasks from one place. It saves me a lot of time."</p>
+        <strong>- Sarah M.</strong>
+      </article>
+      <article class="feature-card quote-card">
+        <p>"The inventory and low-stock alerts helped us avoid stockouts in our shop."</p>
+        <strong>- Brian K.</strong>
+      </article>
+      <article class="feature-card quote-card">
+        <p>"The habit streak feature made me consistent with my weekly targets."</p>
+        <strong>- Mercy T.</strong>
+      </article>
+    </div>
+  </section>
+
+  <section id="blog-posts" class="info-section">
+    <h2>Blog Posts</h2>
+    <div class="feature-grid">
+      <article class="blog-card">
+        <h3>How to Build a 10-Minute Daily Review</h3>
+        <p>Use one checklist every evening to keep expenses, habits, and tasks updated.</p>
+      </article>
+      <article class="blog-card">
+        <h3>Smart Low-Stock Management for Small Shops</h3>
+        <p>Set practical reorder thresholds and track stock movement by location.</p>
+      </article>
+      <article class="blog-card">
+        <h3>Turning Tracker Data Into Weekly Decisions</h3>
+        <p>Focus on trends and outliers so your dashboard produces clear actions.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="about" class="info-section">
+    <h2>About Us</h2>
+    <p>Multi Tracker helps individuals and small teams stay organized by combining essential tracking tools into one platform.</p>
+    <p class="contact-item"><strong>Email:</strong> <a class="contact-link contact-email" href="mailto:johnbett414@gmail.com">johnbett414@gmail.com</a></p>
+    <p class="contact-item"><strong>Phone:</strong> <a class="contact-link contact-phone" href="tel:+254111487078">0111487078</a></p>
+  </section>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Multi Tracker. All rights reserved. Created by johnbett.</p>
+  </footer>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js").catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multi Tracker | Login</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="login-page">
+  <main class="login-shell">
+    <section class="login-card">
+      <div class="brand login-brand">
+        <span class="logo-mark">MT</span>
+        <div>
+          <strong id="auth-title">Welcome Back</strong>
+          <small id="auth-subtitle">Sign in to continue</small>
+        </div>
+      </div>
+
+      <div class="auth-switch" role="tablist" aria-label="Authentication Mode">
+        <button type="button" class="auth-tab active" id="tab-signin">Sign In</button>
+        <button type="button" class="auth-tab" id="tab-signup">Sign Up</button>
+      </div>
+
+      <form class="login-form" id="login-form" novalidate>
+        <label>Email
+          <input type="email" name="email" placeholder="you@example.com" required />
+        </label>
+        <label>Password
+          <input type="password" name="password" placeholder="Minimum 6 characters" required />
+        </label>
+        <p id="login-error" class="login-error" aria-live="polite"></p>
+        <button class="primary" type="submit" id="auth-submit">Sign In</button>
+      </form>
+
+      <button type="button" class="link-btn" id="forgot-btn">Forgot Password?</button>
+      <form class="login-form hidden" id="reset-form" novalidate>
+        <label>Reset Token
+          <input type="text" name="token" placeholder="Paste token" required />
+        </label>
+        <label>New Password
+          <input type="password" name="newPassword" placeholder="Minimum 6 characters" required />
+        </label>
+        <button class="primary" type="submit">Reset Password</button>
+      </form>
+
+      <p class="login-links"><a href="index.html">Back to Landing</a></p>
+    </section>
+  </main>
+  <script>
+    let authMode = "signin";
+    const form = document.getElementById("login-form");
+    const errorEl = document.getElementById("login-error");
+    const submitBtn = document.getElementById("auth-submit");
+    const titleEl = document.getElementById("auth-title");
+    const subtitleEl = document.getElementById("auth-subtitle");
+    const tabSignIn = document.getElementById("tab-signin");
+    const tabSignUp = document.getElementById("tab-signup");
+    const forgotBtn = document.getElementById("forgot-btn");
+    const resetForm = document.getElementById("reset-form");
+
+    function setMode(mode) {
+      authMode = mode;
+      const isSignIn = mode === "signin";
+      tabSignIn.classList.toggle("active", isSignIn);
+      tabSignUp.classList.toggle("active", !isSignIn);
+      submitBtn.textContent = isSignIn ? "Sign In" : "Sign Up";
+      titleEl.textContent = isSignIn ? "Welcome Back" : "Create Account";
+      subtitleEl.textContent = isSignIn ? "Sign in to continue" : "Sign up to start tracking";
+      errorEl.textContent = "";
+    }
+
+    tabSignIn.addEventListener("click", () => setMode("signin"));
+    tabSignUp.addEventListener("click", () => setMode("signup"));
+    forgotBtn.addEventListener("click", async () => {
+      errorEl.textContent = "";
+      const email = String(new FormData(form).get("email") || "").trim().toLowerCase();
+      if (!email) {
+        errorEl.textContent = "Enter your email first, then click Forgot Password.";
+        return;
+      }
+      try {
+        const response = await fetch("/api/forgot-password", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email })
+        });
+        const data = await response.json().catch(() => ({}));
+        if (data.resetToken) {
+          errorEl.textContent = `Reset token: ${data.resetToken}`;
+          resetForm.classList.remove("hidden");
+        } else {
+          errorEl.textContent = data.message || "If your account exists, reset instructions were created.";
+          resetForm.classList.remove("hidden");
+        }
+      } catch (_) {
+        errorEl.textContent = "Server error while requesting password reset.";
+      }
+    });
+
+    resetForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      errorEl.textContent = "";
+      const formData = new FormData(resetForm);
+      const token = String(formData.get("token") || "").trim();
+      const newPassword = String(formData.get("newPassword") || "");
+      try {
+        const response = await fetch("/api/reset-password", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token, newPassword })
+        });
+        const data = await response.json().catch(() => ({}));
+        if (response.ok) {
+          errorEl.textContent = "Password reset successful. Sign in with your new password.";
+          resetForm.classList.add("hidden");
+          setMode("signin");
+          return;
+        }
+        errorEl.textContent = data.message || "Could not reset password.";
+      } catch (_) {
+        errorEl.textContent = "Server error while resetting password.";
+      }
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      errorEl.textContent = "";
+
+      const formData = new FormData(form);
+      const email = String(formData.get("email") || "").trim().toLowerCase();
+      const password = String(formData.get("password") || "");
+      const endpoint = authMode === "signin" ? "/api/login" : "/api/signup";
+
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        if (response.ok) {
+          window.location.href = "home.html";
+          return;
+        }
+
+        const data = await response.json().catch(() => ({}));
+        errorEl.textContent = data.message || "Invalid login details.";
+      } catch (_) {
+        errorEl.textContent = "Server error. Start backend with: npm start";
+      }
+    });
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js").catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

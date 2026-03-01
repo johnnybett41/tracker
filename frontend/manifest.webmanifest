@@ -1,0 +1,10 @@
+﻿{
+  "name": "Multi Tracker",
+  "short_name": "Tracker",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f2f5f9",
+  "theme_color": "#0f3d4c",
+  "description": "Track expenses, habits, tasks, and inventory in one app.",
+  "icons": []
+}
