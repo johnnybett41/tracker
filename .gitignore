@@ -1,0 +1,15 @@
+node_modules/
+.env
+.env.*
+!.env.example
+
+# Runtime artifacts
+backend/data/*.sqlite
+backend/data/*.db
+backend/data/*.db-*
+backend/data/*.sqlite-*
+!backend/data/.gitkeep
+
+# OS/editor files
+.DS_Store
+Thumbs.db
