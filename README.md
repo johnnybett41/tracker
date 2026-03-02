@@ -16,6 +16,14 @@ npm start
 
 3. Open: `http://localhost:3000`
 
+## Quick Health Check
+
+With the backend running, verify health:
+
+```bash
+npm run healthz
+```
+
 ## Environment Variables
 
 - `PORT` (optional): server port (default `3000`)

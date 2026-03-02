@@ -8,6 +8,7 @@
     "node": ">=22.5.0"
   },
   "scripts": {
-    "start": "node backend/server.js"
+    "start": "node backend/server.js",
+    "healthz": "node -e \"const port=process.env.PORT||3000;fetch('http://127.0.0.1:'+port+'/healthz').then(async r=>{const b=await r.text();console.log(b);if(!r.ok)process.exit(1);}).catch(e=>{console.error(e.message);process.exit(1);});\""
   }
 }
