@@ -2,10 +2,14 @@ services:
   - type: web
     name: multi-tracker
     env: docker
-    plan: free
+    plan: starter
     healthCheckPath: /healthz
+    disk:
+      name: tracker-data
+      mountPath: /data
+      sizeGB: 1
     envVars:
       - key: NODE_ENV
         value: production
       - key: DATA_DIR
-        value: /tmp/tracker-data
+        value: /data
